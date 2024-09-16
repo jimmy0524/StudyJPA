@@ -1,23 +1,18 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public Member() {
-
     }
 
     public Long getId() {

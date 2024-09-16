@@ -14,15 +14,11 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        try { //준영속 상태로 만들기
+        try {
+            Member member = new Member();
+            member.setName("C");
 
-            //영속
-            Member member = em.find(Member.class, 150L);
-            member.setName("zzz");
-
-            em.detach(member); //영속성 컨텍스트에서 더이상 관리 x
-
-            System.out.println("==========");
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
@@ -31,6 +27,24 @@ public class JpaMain {
             em.close();
         }
         emf.close();
+
+//        try { //준영속 상태로 만들기
+//
+//            //영속
+//            Member member = em.find(Member.class, 150L);
+//            member.setName("zzz");
+//
+//            em.detach(member); //영속성 컨텍스트에서 더이상 관리 x
+//
+//            System.out.println("==========");
+//
+//            tx.commit();
+//        } catch (Exception e) {
+//            tx.rollback();
+//        } finally {
+//            em.close();
+//        }
+//        emf.close();
 
 //        try { //변경감지 테스트
 //
