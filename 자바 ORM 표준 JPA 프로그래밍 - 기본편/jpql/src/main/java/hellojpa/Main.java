@@ -24,13 +24,11 @@ public class Main {
             em.flush();
             em.clear();
 
-            List<MemberDTO> result = em.createQuery("select new hellojpa.MemberDTO(m.username, m.age) from Member m",
-                            MemberDTO.class)
+            String jpql = "select m from Member m order by m.age desc";
+            List<Member> resultList = em.createQuery(jpql, Member.class)
+                    .setFirstResult(10)
+                    .setMaxResults(20)
                     .getResultList();
-
-            MemberDTO memberDTO = result.get(0);
-            System.out.println("memberDTO = " + memberDTO.getUsername());
-            System.out.println("memberDTO = " + memberDTO.getAge());
 
             tx.commit();
         } catch (Exception e) {
