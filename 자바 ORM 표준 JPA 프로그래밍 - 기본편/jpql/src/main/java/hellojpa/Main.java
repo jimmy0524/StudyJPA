@@ -16,18 +16,33 @@ public class Main {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
             Member member = new Member();
             member.setUsername("member1");
             member.setAge(0);
+            member.changeTeam(team);
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            String jpql = "select m from Member m order by m.age desc";
-            List<Member> resultList = em.createQuery(jpql, Member.class)
-                    .setFirstResult(10)
-                    .setMaxResults(20)
+            String inner = "select m from Member m inner join m.team t";
+            List<Member> result1 = em.createQuery(inner, Member.class)
+                    .getResultList();
+
+            em.clear();
+
+            String outer = "select m from Member m left outer join m.team t";
+            List<Member> result2 = em.createQuery(outer, Member.class)
+                    .getResultList();
+
+            em.clear();
+
+            String theta = "select m from Member m, Team t where m.username = t.name";
+            List<Member> result3 = em.createQuery(theta, Member.class)
                     .getResultList();
 
             tx.commit();
