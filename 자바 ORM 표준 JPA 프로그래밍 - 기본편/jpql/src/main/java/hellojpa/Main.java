@@ -17,7 +17,14 @@ public class Main {
         try {
             Member member = new Member();
             member.setUsername("member1");
+            member.setAge(0);
             em.persist(member);
+
+            Member result = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                    .setParameter("username", "member1")
+                    .getSingleResult();
+
+            System.out.println("result = " + result.getUsername());
 
             tx.commit();
         } catch (Exception e) {
