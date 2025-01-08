@@ -11,10 +11,11 @@ public class Member extends BaseEntity {
     @Column(name = "MEMBER_ID")
     private Long id;
     private String name;
-    private String street;
-    private String zipcode;
 
-    @OneToMany(mappedBy = "MEMBER_ID")
+    @Embedded
+    private Address address;
+
+    @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
     public Long getId() {
@@ -33,19 +34,19 @@ public class Member extends BaseEntity {
         this.name = name;
     }
 
-    public String getStreet() {
-        return street;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public String getZipcode() {
-        return zipcode;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
