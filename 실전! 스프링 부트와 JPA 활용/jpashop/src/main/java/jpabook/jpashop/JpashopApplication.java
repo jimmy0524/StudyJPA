@@ -11,7 +11,6 @@ public class JpashopApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JpashopApplication.class, args);
 	}
-
 //	@Bean
 //	Hibernate5JakartaModule hibernate5Module() {
 //		Hibernate5JakartaModule hibernate5Module = new Hibernate5JakartaModule();
