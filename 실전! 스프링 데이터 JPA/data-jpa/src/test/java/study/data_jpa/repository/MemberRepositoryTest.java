@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
+import study.data_jpa.dto.UsernameOnly;
 import study.data_jpa.entity.Member;
 import study.data_jpa.entity.Team;
 import study.data_jpa.specification.MemberSpec;
@@ -184,5 +185,26 @@ public class MemberRepositoryTest {
 
         //then
         assertThat(result.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void projections() throws Exception {
+        //given
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+        em.persist(m1);
+        em.persist(m2);
+        em.flush();
+        em.clear();
+
+        //when
+        List<UsernameOnly> result =
+                memberRepository.findProjectionsByUsername("m1");
+
+        //then
+        Assertions.assertThat(result.size()).isEqualTo(1);
     }
 }
