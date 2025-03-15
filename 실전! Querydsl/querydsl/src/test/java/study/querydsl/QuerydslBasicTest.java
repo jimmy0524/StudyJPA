@@ -66,7 +66,7 @@ public class QuerydslBasicTest {
                         "where m.username = :username";
 
         Member findMember = em.createQuery(qlString, Member.class)
-                .setParameter("username", "member1")
+                .setParameter("username", "member")
                 .getSingleResult();
 
         assertThat(findMember.getUsername()).isEqualTo("member1");
@@ -461,6 +461,4 @@ public class QuerydslBasicTest {
     private BooleanExpression usernameEq(String usernameParam) {
         return usernameParam != null ? member.username.eq(usernameParam) : null;
     }
-
-
 }
